@@ -1,0 +1,13 @@
+<div class="container dugme">
+  <label style="font-size: large;" class="bmd-label-static labela"><strong>Pretraži imenik</strong></label>
+  <input [(ngModel)]="pretraga" (ngModelChange)="trazi()" type="text" class="form-control"
+    placeholder="Unesi ime/broj/adresu">
+</div>
+<br>
+<div *ngIf="imenici.length>0" class="skrol">
+  <div *ngFor="let imenik of imenici" id="kartica">
+    {{imenik.ime}}<br>
+    {{imenik.broj}}<br>
+    {{imenik.adresa}}
+  </div>
+</div>

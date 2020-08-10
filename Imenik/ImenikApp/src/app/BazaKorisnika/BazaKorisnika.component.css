@@ -1,0 +1,81 @@
+.dugme {
+  text-align: center;
+  justify-content: center;
+  /* border: 1px solid pink; */
+  width: 40%;
+  font-family: Cambria,
+    Cochin,
+    Georgia,
+    Times,
+    'Times New Roman',
+    serif;
+}
+
+.skrol {
+  height: 700px;
+  overflow: auto;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+
+#kartica {
+  /* width: 60%; 
+  margin-right: 20%;
+  margin-left: 20%; */
+  border: 3px solid black;
+  margin-bottom: 2%;
+  text-align: center;
+  justify-content: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  background-color: rgb(207, 123, 207);
+  cursor: pointer;
+  font-size: large;
+
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#kartica:hover {
+
+  transform: translateY(3px);
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+
+}
+
+@media screen and (max-width: 800px) {
+
+  .dugme {
+    width: 70%;
+  }
+
+  .skrol {
+    height: 450px;
+    overflow: auto;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+
+}

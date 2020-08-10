@@ -1,0 +1,103 @@
+.dugme {
+  text-align: center;
+  justify-content: center;
+  /* border: 1px solid pink; */
+  width: 40%;
+  font-family: Cambria,
+    Cochin,
+    Georgia,
+    Times,
+    'Times New Roman',
+    serif;
+}
+
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: aliceblue;
+  font-size: large;
+  border: 1px rgb(156, 39, 176);
+  border-style: solid;
+
+
+}
+
+
+::ng-deep snack-bar-container.success {
+  background-color: green;
+  color: white;
+}
+
+
+
+table {
+  font-family: Cambria,
+    Cochin,
+    Georgia,
+    Times,
+    'Times New Roman',
+    serif;
+  text-align: center;
+  justify-content: center;
+  border-collapse: separate;
+
+}
+
+
+
+.skrol {
+  height: 600px;
+  overflow: auto;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+  height: 46px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media screen and (max-width: 1000px) {
+
+  .dugme {
+    width: 70%;
+  }
+
+}
+
+@media screen and (max-height: 800px) {
+
+  .skrol {
+    height: 350px;
+    overflow: auto;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+  }
+
+}

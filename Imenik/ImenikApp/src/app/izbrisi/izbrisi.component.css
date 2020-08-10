@@ -1,0 +1,26 @@
+mat-dialog-content {
+  text-align: center;
+  justify-content: center;
+  margin-top: 15%;
+  font-family: Cambria,
+    Cochin,
+    Georgia,
+    Times,
+    'Times New Roman',
+    serif;
+
+
+}
+
+mat-dialog-actions {
+
+  text-align: center;
+  justify-content: center;
+  font-family: Cambria,
+    Cochin,
+    Georgia,
+    Times,
+    'Times New Roman',
+    serif;
+
+}

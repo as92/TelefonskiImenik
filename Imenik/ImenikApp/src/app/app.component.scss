@@ -1,0 +1,51 @@
+.navbar-brand {
+  font-family: Cambria,
+    Cochin,
+    Georgia,
+    Times,
+    'Times New Roman',
+    serif;
+
+}
+
+
+
+.navbar-brand:hover {
+  color: palevioletred;
+}
+
+.fiksno {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 20%;
+  //z-index: 40;
+}
+
+.ostalo {
+
+  //overflow: auto;
+}
+
+
+router-outlet {
+  font-family: Cambria,
+    Cochin,
+    Georgia,
+    Times,
+    'Times New Roman',
+    serif;
+}
+
+@media screen and (max-width: 800px) {
+
+  .navbar {
+    display: block;
+  }
+
+  .navbar-brand:hover {
+    color: palevioletred;
+  }
+
+
+}

@@ -1,0 +1,39 @@
+<h1>Uredi korisnika</h1>
+<mat-dialog-content [formGroup]="forma">
+  <mat-form-field>
+    <input type="text" placeholder="Ime" formControlName="ime" matInput [(ngModel)]="korisnik.ime" />
+    <mat-error *ngIf="hasError('ime', 'required')">Ime je obavezno!</mat-error>
+    <mat-error *ngIf="hasError('ime', 'maxlength')">Ime sadrži više od 30 slova!</mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field>
+    <mat-select placeholder="Županija" matSelect formControlName="odabir" [(ngModel)]="pozivni1">
+      <mat-option *ngFor="let zupan of zupanije" [value]="zupan.pozivni">
+        {{zupan.ime}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="hasError('odabir', 'required')">Odaberite županiju!</mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field>
+    <input type="text" placeholder="Broj" formControlName="broj" matInput [(ngModel)]="pozivni2" />
+    <mat-error *ngIf="hasError('broj', 'required')">Telefonski broj je obavezan!</mat-error>
+    <mat-error *ngIf="hasError('broj', 'minlength')">Tel. broj treba imati minimalno 6 znamenaka!</mat-error>
+    <mat-error *ngIf="hasError('broj', 'maxlength')">Tel. broj treba imati maksimalno 7 znamenaka!</mat-error>
+    <mat-error *ngIf="hasError('broj', 'pattern')">Unesite telefonski broj (samo brojevi)!</mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field>
+    <input type="text" placeholder="Adresa" formControlName="adresa" matInput [(ngModel)]="korisnik.adresa" />
+    <mat-error *ngIf="hasError('adresa', 'required')">Adresa je obavezna!</mat-error>
+    <mat-error *ngIf="hasError('adresa', 'maxlength')">Adresa sadrži više od 100 slova!</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [disabled]="!forma.valid || !forma.dirty" (click)="uredi()" mat-raised-button color="primary"
+    class="btn btn-round">Spremi</button>
+  <button mat-button (click)="zatvori()" mat-raised-button color="warn" class="btn btn-round">Odustani</button>
+</mat-dialog-actions>

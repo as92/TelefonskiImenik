@@ -1,0 +1,34 @@
+<div class="container dugme">
+  <label class="bmd-label-static"><strong>Pretraži imenik</strong></label>
+  <input [(ngModel)]="pretraga" (ngModelChange)="trazi()" type="text" class="form-control"
+    placeholder="Unesi ime/broj/adresu">
+</div>
+<div class="container dugme form-group bmd-form-group">
+  <button (click)="openDialogDodaj()" type="button" class="btn btn-round btn-info">Dodaj korisnika</button>
+</div>
+<div *ngIf="imenici.length>0" class="skrol">
+  <table class="table table-bordered table-fixed">
+    <thead>
+      <tr>
+        <th scope="col">Ime</th>
+        <th scope="col">Broj</th>
+        <th scope="col">Adresa</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let imenik of imenici">
+        <td>{{imenik.ime}}</td>
+        <td>{{imenik.broj}}</td>
+        <td>{{imenik.adresa}}</td>
+        <td style="width:5%">
+          <button type="button" class="btn btn-round btn-primary"
+            (click)="openDialogUredi(imenik.imenikId)">Uredi</button>
+        </td>
+        <td style="width:5%"><button type="button" class="btn btn-round btn-danger"
+            (click)="openDialogIzbrisi(imenik.imenikId)">Briši</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
