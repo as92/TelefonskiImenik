@@ -49,32 +49,34 @@ namespace Imenik.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTelefonskiImenik(int id, TelefonskiImenik telefonskiImenik)
         {
-            bool brojPostoji = false;
+            
             if (id != telefonskiImenik.ImenikId)
             {
                 return BadRequest();
             }
-            foreach (TelefonskiImenik t in _context.TelefonskiImenik)
-            {
-                if ((t.ImenikId != id) && (t.Broj == telefonskiImenik.Broj))
-                {
-                    brojPostoji = true;
-                }
-            }
-            if (brojPostoji)
+            //foreach (TelefonskiImenik t in _context.TelefonskiImenik)
+            //{
+            //    if ((t.ImenikId != id) && (t.Broj == telefonskiImenik.Broj))
+            //    {
+            //        brojPostoji = true;
+            //    }
+            //}
+
+            TelefonskiImenik test = _context.TelefonskiImenik.Where(a => (a.ImenikId != id && a.Broj == telefonskiImenik.Broj)).FirstOrDefault();
+            if (test != null)
             {
                 return Conflict(new { message = $"Telefonski broj u imeniku već postoji: '{telefonskiImenik.Broj}'!" });
             }
-
-
-
-            // _context.Entry(telefonskiImenik).State = EntityState.Modified;
-            TelefonskiImenik ti = _context.TelefonskiImenik.Where(p => p.ImenikId == telefonskiImenik.ImenikId).FirstOrDefault();
-            ti.Ime = telefonskiImenik.Ime;
-            ti.Broj = telefonskiImenik.Broj;
-            ti.Adresa = telefonskiImenik.Adresa;
-            await _context.SaveChangesAsync();
-            return NoContent();
+            else
+            {
+                TelefonskiImenik ti = _context.TelefonskiImenik.Where(p => p.ImenikId == telefonskiImenik.ImenikId).FirstOrDefault();
+                ti.Ime = telefonskiImenik.Ime;
+                ti.Broj = telefonskiImenik.Broj;
+                ti.Adresa = telefonskiImenik.Adresa;
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            
         }
 
         // POST: api/TelefonskiImeniks
