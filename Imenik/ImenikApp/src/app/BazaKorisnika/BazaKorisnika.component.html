@@ -1,11 +1,17 @@
 <div class="container dugme">
   <label style="font-size: large;" class="bmd-label-static labela"><strong>Pretraži imenik</strong></label>
-  <input [(ngModel)]="pretraga" (ngModelChange)="trazi()" type="text" class="form-control"
-    placeholder="Unesi ime/broj/adresu">
+  <input [(ngModel)]="pretraga" type="text" class="form-control" placeholder="Unesi ime/broj/adresu">
+  <button (click)="trazi()" [disabled]="pretraga === ''" type="button" class="btn btn-round btn-info">Pretraži
+    korisnike</button>
+  <button (click)="prikaziSve()" type="button" class="btn btn-round btn-info">Prikaži sve korisnike</button>
 </div>
 <br>
+<div class="paging">
+  <app-Paging [items]="imenici" [totalItems]="totalCount" [totalPages]="totalPages" (changePage)="onChangePage($event)">
+  </app-Paging>
+</div>
 <div *ngIf="imenici.length>0" class="skrol">
-  <div *ngFor="let imenik of imenici" id="kartica">
+  <div *ngFor="let imenik of pageOfItems" id="kartica">
     {{imenik.ime}}<br>
     {{imenik.broj}}<br>
     {{imenik.adresa}}

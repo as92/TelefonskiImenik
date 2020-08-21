@@ -8,11 +8,17 @@
 
 }
 
-
+.navbar {
+  display: block;
+}
 
 .navbar-brand:hover {
   color: palevioletred;
 }
+
+
+
+
 
 .fiksno {
   position: fixed;
@@ -23,7 +29,7 @@
 }
 
 .ostalo {
-
+  margin-bottom: 10%;
   //overflow: auto;
 }
 
@@ -37,15 +43,4 @@ router-outlet {
     serif;
 }
 
-@media screen and (max-width: 800px) {
-
-  .navbar {
-    display: block;
-  }
-
-  .navbar-brand:hover {
-    color: palevioletred;
-  }
-
-
-}
+@media screen and (max-width: 800px) {}

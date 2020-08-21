@@ -1,3 +1,4 @@
+import { PagingComponent } from './Paging/Paging.component';
 
 import { ImenikservisService } from './service/imenikservis.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,6 +21,8 @@ import { IzbrisiComponent } from './izbrisi/izbrisi.component';
 import { MatCardModule } from '@angular/material/card';
 import { BazaKorisnikaComponent } from './BazaKorisnika/BazaKorisnika.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JwPaginationModule } from 'jw-angular-pagination';
+
 
 
 
@@ -30,7 +33,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       DodajComponent,
       UrediComponent,
       IzbrisiComponent,
-      BazaKorisnikaComponent
+      BazaKorisnikaComponent,
+      PagingComponent
    ],
    imports: [
       //tslint:disable-next-line:indent,
@@ -49,7 +53,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       MatButtonModule,
       MatSelectModule,
       MatCardModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      JwPaginationModule
 
    ],
    entryComponents: [

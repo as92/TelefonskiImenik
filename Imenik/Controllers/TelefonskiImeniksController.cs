@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Imenik.Data;
 using Imenik.Models;
+using Imenik;
+using System.Reflection.Metadata;
+using Newtonsoft.Json;
 
 namespace Imenik.Controllers
 {
@@ -16,6 +19,7 @@ namespace Imenik.Controllers
     public class TelefonskiImeniksController : ControllerBase
     {
         private readonly ImenikContext _context;
+        private List<TelefonskiImenik> users;
 
         public TelefonskiImeniksController(ImenikContext context)
         {
@@ -24,10 +28,45 @@ namespace Imenik.Controllers
 
         // GET: api/TelefonskiImeniks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TelefonskiImenik>>> GetTelefonskiImenik()
+        public IEnumerable<TelefonskiImenik> GetTelefonskiImenik([FromQuery] Parameters parametri)
         {
-            return await _context.TelefonskiImenik.ToListAsync();
-        }
+                    
+            if (parametri.Trazi != "default")
+            {
+                users = _context.TelefonskiImenik.Where(u => u.Ime.Contains(parametri.Trazi) || u.Broj.Contains(parametri.Trazi) || u.Adresa.Contains(parametri.Trazi)).OrderBy(u=> u.Ime).ToList();
+            }
+            else
+            {
+
+                users = _context.TelefonskiImenik
+                                .OrderBy(a => a.Ime)
+                                .ToList();
+            }
+            int pageSize = 0;
+            int count = users.Count();
+            if (count < 10)
+            {
+                pageSize = count;
+            }
+            else
+            {
+                pageSize = parametri.PageSize;
+            }
+            int currentPage = parametri.PageNumber;
+            int totalPages = (int)Math.Ceiling(count / (double)pageSize);             
+            var items = users.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            var broj = items.Count();               
+            var paginationMetadata = new
+            {
+                totalCount = count,
+                pageSize = pageSize,
+                currentPage = currentPage,
+                totalPages = totalPages                
+            };
+            HttpContext.Response.Headers.Add("Paging-Headers", JsonConvert.SerializeObject(paginationMetadata));            
+            return items;
+
+        }       
 
         // GET: api/TelefonskiImeniks/5
         [HttpGet("{id}")]
@@ -53,14 +92,7 @@ namespace Imenik.Controllers
             if (id != telefonskiImenik.ImenikId)
             {
                 return BadRequest();
-            }
-            //foreach (TelefonskiImenik t in _context.TelefonskiImenik)
-            //{
-            //    if ((t.ImenikId != id) && (t.Broj == telefonskiImenik.Broj))
-            //    {
-            //        brojPostoji = true;
-            //    }
-            //}
+            }           
 
             TelefonskiImenik test = _context.TelefonskiImenik.Where(a => (a.ImenikId != id && a.Broj == telefonskiImenik.Broj)).FirstOrDefault();
             if (test != null)

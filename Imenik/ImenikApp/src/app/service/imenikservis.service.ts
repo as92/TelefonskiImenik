@@ -1,6 +1,6 @@
 import { Imenik } from './../models/Imenik';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError, tap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -12,7 +12,7 @@ declare let alertify: any;
   providedIn: 'root'
 })
 export class ImenikservisService {
-
+  trazi = 'default';
   myAppUrl: string;
   myApiImenikUrl: string;
   httpOptions = {
@@ -107,14 +107,43 @@ export class ImenikservisService {
       pozivni: '053'
     }
     ];
-
-  getImeniks(): Observable<Imenik[]> {
-    return this.http.get<Imenik[]>(this.myAppUrl + this.myApiImenikUrl)
+  //?pageNumber=2 & pageSize=2
+  getImeniks(pagenumber: number) {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<Imenik[]>((this.myAppUrl + this.myApiImenikUrl + '?PageNumber=' + pagenumber), { observe: 'response' })
       .pipe(
         retry(1),
         catchError(this.errorHandler)
+
       );
   }
+
+  getImeniksTrazi(trazi: string) {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<Imenik[]>((this.myAppUrl + this.myApiImenikUrl + '?Trazi=' + trazi), { observe: 'response' })
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+
+      );
+  }
+  getImeniksTraziPage(trazi: string, pagenumber: number) {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<Imenik[]>((this.myAppUrl + this.myApiImenikUrl + '?PageNumber=' + pagenumber + '&' + 'Trazi=' + trazi), { observe: 'response' })
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+
+      );
+  }
+  // getImeniks(pagenumber: number, pagesize: number): Observable<Imenik[]> {
+  //   return this.http.get<Imenik[]>(this.myAppUrl + this.myApiImenikUrl + '?pageNumber=' + pagenumber + '&' + 'pageSize=' + pagesize)
+  //     .pipe(
+  //       retry(1),
+  //       catchError(this.errorHandler)
+  //     );
+  // }
+
   getImenik(imenikId: number): Observable<Imenik> {
     return this.http.get<Imenik>(this.myAppUrl + this.myApiImenikUrl + '/' + imenikId)
       .pipe(
@@ -143,6 +172,10 @@ export class ImenikservisService {
         retry(1),
         catchError(this.errorHandler)
       );
+  }
+
+  pretrazi(trazi: string) {
+    this.trazi = trazi;
   }
 
 

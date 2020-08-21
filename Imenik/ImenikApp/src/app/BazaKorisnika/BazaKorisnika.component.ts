@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ImenikservisService } from './../service/imenikservis.service';
 import { Imenik } from './../models/Imenik';
 import { Observable } from 'rxjs';
-
+import { HttpResponse } from '@angular/common/http';
+declare let alertify: any;
 
 @Component({
   selector: 'app-BazaKorisnika',
@@ -10,30 +11,66 @@ import { Observable } from 'rxjs';
   styleUrls: ['./BazaKorisnika.component.css']
 })
 export class BazaKorisnikaComponent implements OnInit {
-  imeniks$: Observable<Imenik[]>;
+  header: Array<any>;
+  totalCount: number;
+  totalPages: number;
+  pageOfItems: Array<any>;
+  imeniks$: Observable<HttpResponse<Imenik[]>>;
   pretraga = '';
   imenici: Imenik[] = [];
+  currentPage = 1;
+  obj: JSON;
 
   constructor(private servis: ImenikservisService) { }
 
   ngOnInit() {
-    this.imeniks$ = this.servis.getImeniks();
-    // this.imeniks$.subscribe(result => this.imenici = result);
+    this.imeniks$ = this.servis.getImeniks(this.currentPage);
+    this.imeniks$.subscribe(result => {
+      this.imenici = result.body,
+        this.header = result.headers.getAll('paging-headers'),
+        this.obj = JSON.parse(this.header[0]),
+        this.totalCount = this.obj['totalCount'],
+        this.totalPages = this.obj['totalPages']
+    });
+  }
+
+  prikaziSve() {
+    this.servis.trazi = 'default';
+    this.imeniks$ = this.servis.getImeniks(this.currentPage);
+    this.imeniks$.subscribe(result => {
+      this.imenici = result.body,
+        this.header = result.headers.getAll('paging-headers'),
+        this.obj = JSON.parse(this.header[0]),
+        this.totalCount = this.obj['totalCount'],
+        this.totalPages = this.obj['totalPages']
+    });
+
+  }
+
+  onChangePage(pageOfItems: []) {
+    // update current page of items
+    this.pageOfItems = pageOfItems;
   }
 
   trazi() {
-    if (this.pretraga !== '') {
-      this.imeniks$.subscribe(result => {
-        this.imenici = result;
-        this.imenici = this.imenici.filter(x => {
-          var zamjena = x.broj.replace('/', '');
-          // tslint:disable-next-line: max-line-length
-          return (x.ime.toLowerCase().includes(this.pretraga.toLowerCase()) || (zamjena.toLowerCase().includes(this.pretraga.toLowerCase())) || x.adresa.toLowerCase().includes(this.pretraga.toLowerCase()));
-        })
-      });
-    }
-    else {
-      this.imenici = [];
+    this.servis.trazi = this.pretraga;
+    this.imeniks$ = this.servis.getImeniksTrazi(this.pretraga);
+    this.imeniks$.subscribe(result => {
+      if (result.body.length > 0) {
+        this.imenici = result.body,
+          this.header = result.headers.getAll('paging-headers'),
+          this.obj = JSON.parse(this.header[0]),
+          this.totalCount = this.obj['totalCount'],
+          this.totalPages = this.obj['totalPages']
+      }
+      else {
+        alertify.set('notifier', 'position', 'bottom-center');
+        alertify.error('Nije pronađen nijedan korisnik s unesenim podacima!');
+      }
+
+    });
+    if (this.totalCount === 0) {
+      this.ngOnInit();
     }
   }
 

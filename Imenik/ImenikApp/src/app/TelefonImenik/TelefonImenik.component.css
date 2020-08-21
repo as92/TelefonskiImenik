@@ -9,8 +9,8 @@
     Times,
     'Times New Roman',
     serif;
+  padding-top: 0;
 }
-
 
 thead th {
   position: sticky;
@@ -24,8 +24,7 @@ thead th {
 
 }
 
-
-::ng-deep snack-bar-container.success {
+button::ng-deep snack-bar-container.success {
   background-color: green;
   color: white;
 }
@@ -45,10 +44,19 @@ table {
 
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
 
+.paging {
+  width: 90%;
+  margin-left: 5%;
+
+
+}
 
 .skrol {
-  height: 600px;
+  height: 300px;
   overflow: auto;
   width: 90%;
   margin-left: 5%;
@@ -86,18 +94,26 @@ td {
   .dugme {
     width: 70%;
   }
+}
 
+@media (max-height: 800px) and (max-width: 500px) {
+
+  .skrol {
+    height: 100px;
+  }
 }
 
 @media screen and (max-height: 800px) {
 
   .skrol {
-    height: 350px;
-    overflow: auto;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
+    height: 300px;
+  }
+}
 
+@media screen and (min-height: 800px) {
+
+  .skrol {
+    height: 600px;
   }
 
 }
