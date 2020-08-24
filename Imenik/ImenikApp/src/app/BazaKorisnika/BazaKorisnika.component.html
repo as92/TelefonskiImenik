@@ -1,9 +1,9 @@
 <div class="container dugme">
   <label style="font-size: large;" class="bmd-label-static labela"><strong>Pretraži imenik</strong></label>
-  <input [(ngModel)]="pretraga" type="text" class="form-control" placeholder="Unesi ime/broj/adresu">
-  <button (click)="trazi()" [disabled]="pretraga === ''" type="button" class="btn btn-round btn-info">Pretraži
-    korisnike</button>
-  <button (click)="prikaziSve()" type="button" class="btn btn-round btn-info">Prikaži sve korisnike</button>
+  <input [(ngModel)]="pretraga" (ngModelChange)="prikaziSve()" type="text" class="form-control"
+    placeholder="Unesi ime/broj/adresu">
+  <button (click)="trazi()" [disabled]="pretraga === ''" type="button" class="btn btn-round btn-info">Pretraži</button>
+  <!-- <button (click)="prikaziSve()" type="button" class="btn btn-round btn-info">Prikaži sve korisnike</button> -->
 </div>
 <br>
 <div class="paging">

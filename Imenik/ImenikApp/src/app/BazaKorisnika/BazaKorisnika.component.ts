@@ -35,16 +35,17 @@ export class BazaKorisnikaComponent implements OnInit {
   }
 
   prikaziSve() {
-    this.servis.trazi = 'default';
-    this.imeniks$ = this.servis.getImeniks(this.currentPage);
-    this.imeniks$.subscribe(result => {
-      this.imenici = result.body,
-        this.header = result.headers.getAll('paging-headers'),
-        this.obj = JSON.parse(this.header[0]),
-        this.totalCount = this.obj['totalCount'],
-        this.totalPages = this.obj['totalPages']
-    });
-
+    if (this.pretraga === '') {
+      this.servis.trazi = 'default';
+      this.imeniks$ = this.servis.getImeniks(1);
+      this.imeniks$.subscribe(result => {
+        this.imenici = result.body,
+          this.header = result.headers.getAll('paging-headers'),
+          this.obj = JSON.parse(this.header[0]),
+          this.totalCount = this.obj['totalCount'],
+          this.totalPages = this.obj['totalPages']
+      });
+    }
   }
 
   onChangePage(pageOfItems: []) {

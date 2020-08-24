@@ -30,10 +30,10 @@ namespace Imenik.Controllers
         [HttpGet]
         public IEnumerable<TelefonskiImenik> GetTelefonskiImenik([FromQuery] Parameters parametri)
         {
-                    
+               
             if (parametri.Trazi != "default")
             {
-                users = _context.TelefonskiImenik.Where(u => u.Ime.Contains(parametri.Trazi) || u.Broj.Contains(parametri.Trazi) || u.Adresa.Contains(parametri.Trazi)).OrderBy(u=> u.Ime).ToList();
+                users = _context.TelefonskiImenik.Where(u => u.Ime.StartsWith(parametri.Trazi) || u.Broj.StartsWith(parametri.Trazi) || u.Adresa.StartsWith(parametri.Trazi)).OrderBy(u=> u.Ime).ToList();
             }
             else
             {

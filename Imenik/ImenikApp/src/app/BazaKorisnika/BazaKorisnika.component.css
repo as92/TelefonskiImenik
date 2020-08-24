@@ -11,7 +11,6 @@
 }
 
 .skrol {
-  height: 600px;
   overflow: auto;
   width: 60%;
   margin-left: 20%;
@@ -41,6 +40,10 @@
 
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -67,7 +70,7 @@
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
 }
 
-@media screen and (max-width: 800px) {
+/* @media screen and (max-width: 800px) {
 
   .dugme {
     width: 70%;
@@ -97,4 +100,4 @@
   .skrol {
     height: 600px;
   }
-}
+} */
