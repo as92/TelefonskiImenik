@@ -25,6 +25,8 @@ export class TelefonImenikComponent implements OnInit {
   header: Array<any>;
   totalCount: number;
   totalPages: number;
+  red = [5, 10, 15, 20];
+  brojRedaka = 10;
   obj: JSON;
   imeniks$: Observable<HttpResponse<Imenik[]>>;
   pretraga = '';
@@ -123,7 +125,7 @@ export class TelefonImenikComponent implements OnInit {
         this.header = result.headers.getAll('paging-headers'),
         this.obj = JSON.parse(this.header[0]),
         this.totalCount = this.obj['totalCount'],
-        this.totalPages = this.obj['totalPages']
+        this.totalPages = this.obj['totalPages'];
     });
 
   }
@@ -137,11 +139,27 @@ export class TelefonImenikComponent implements OnInit {
           this.header = result.headers.getAll('paging-headers'),
           this.obj = JSON.parse(this.header[0]),
           this.totalCount = this.obj['totalCount'],
-          this.totalPages = this.obj['totalPages']
+          this.totalPages = this.obj['totalPages'];
       });
     }
 
 
+
+  }
+  // bug je kad pretražin po broju npr, pa minjan broj redaka, više redaka izbacuje
+  promjenibrojRedaka() {
+    this.servis.brojRedaka = this.brojRedaka;
+    if (this.pretraga === '') {
+      this.servis.trazi = 'default';
+    }
+    this.imeniks$ = this.servis.getImeniks(this.currentPage);
+    this.imeniks$.subscribe(result => {
+      this.imenici = result.body,
+        this.header = result.headers.getAll('paging-headers'),
+        this.obj = JSON.parse(this.header[0]),
+        this.totalCount = this.obj['totalCount'],
+        this.totalPages = this.obj['totalPages'];
+    });
 
   }
 
@@ -159,17 +177,16 @@ export class TelefonImenikComponent implements OnInit {
           this.header = result.headers.getAll('paging-headers'),
           this.obj = JSON.parse(this.header[0]),
           this.totalCount = this.obj['totalCount'],
-          this.totalPages = this.obj['totalPages']
+          this.totalPages = this.obj['totalPages'];
       }
       else {
         alertify.set('notifier', 'position', 'bottom-center');
         alertify.error('Nije pronađen nijedan korisnik s unesenim podacima!');
+        this.ngOnInit();
       }
 
     });
-    if (this.totalCount === 0) {
-      this.ngOnInit();
-    }
+
     // this.imenici = result.body;
     // this.imenici = this.imenici.filter(x => {
     //   // tslint:disable-next-line: max-line-length

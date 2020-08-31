@@ -19,7 +19,6 @@ export class PagingComponent implements OnInit {
   @Input() items = [];
   @Output() changePage = new EventEmitter<any>(true);
   @Input() initialPage = 1;
-  @Input() pageSize = 10;
   @Input() totalItems: number;
   @Input() totalPages: number;
   pager: any = {};
@@ -42,14 +41,16 @@ export class PagingComponent implements OnInit {
     }
   }
   public setPage(page: number) {
+    console.log(this.servis.brojRedaka);
     if (this.totalItems === undefined) {
       return;
     }
-    this.imeniks$ = this.servis.getImeniksTraziPage(this.servis.trazi, page);
+    this.imeniks$ = this.servis.getImeniksTraziPage(this.servis.trazi, page, this.servis.brojRedaka);
     this.imeniks$.subscribe(result => {
       this.items = result.body;
       // get new pager object for specified page
-      this.pager = paginate(this.totalItems, page, this.pageSize, this.totalPages);
+      this.pager = paginate(this.totalItems, page, this.servis.brojRedaka, this.totalPages);
+      console.log(this.pager);
       // get new page of items from items array
       let pageOfItems = this.items.slice(0, this.items.length + 1);
       // call change page function in parent component

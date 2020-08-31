@@ -12,7 +12,9 @@ declare let alertify: any;
   providedIn: 'root'
 })
 export class ImenikservisService {
+
   trazi = 'default';
+  brojRedaka = 10;
   myAppUrl: string;
   myApiImenikUrl: string;
   httpOptions = {
@@ -107,6 +109,7 @@ export class ImenikservisService {
       pozivni: '053'
     }
     ];
+
   //?pageNumber=2 & pageSize=2
   getImeniks(pagenumber: number) {
     // tslint:disable-next-line: max-line-length
@@ -127,9 +130,9 @@ export class ImenikservisService {
 
       );
   }
-  getImeniksTraziPage(trazi: string, pagenumber: number) {
+  getImeniksTraziPage(trazi: string, pagenumber: number, pagesize: number) {
     // tslint:disable-next-line: max-line-length
-    return this.http.get<Imenik[]>((this.myAppUrl + this.myApiImenikUrl + '?PageNumber=' + pagenumber + '&' + 'Trazi=' + trazi), { observe: 'response' })
+    return this.http.get<Imenik[]>((this.myAppUrl + this.myApiImenikUrl + '?PageNumber=' + pagenumber + '&' + 'Trazi=' + trazi + '&' + 'PageSize=' + pagesize), { observe: 'response' })
       .pipe(
         retry(1),
         catchError(this.errorHandler)
@@ -151,6 +154,8 @@ export class ImenikservisService {
         catchError(this.errorHandler)
       );
   }
+
+
   saveImenik(imenik): Observable<Imenik> {
     return this.http.post<Imenik>(this.myAppUrl + this.myApiImenikUrl, JSON.stringify(imenik), this.httpOptions)
       .pipe(

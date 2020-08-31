@@ -22,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 import { BazaKorisnikaComponent } from './BazaKorisnika/BazaKorisnika.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwPaginationModule } from 'jw-angular-pagination';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -54,7 +55,8 @@ import { JwPaginationModule } from 'jw-angular-pagination';
       MatSelectModule,
       MatCardModule,
       MatSnackBarModule,
-      JwPaginationModule
+      JwPaginationModule,
+      MatTooltipModule
 
    ],
    entryComponents: [

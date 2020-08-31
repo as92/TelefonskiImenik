@@ -42,16 +42,9 @@ namespace Imenik.Controllers
                                 .OrderBy(a => a.Ime)
                                 .ToList();
             }
-            int pageSize = 0;
+            
             int count = users.Count();
-            if (count < 10)
-            {
-                pageSize = count;
-            }
-            else
-            {
-                pageSize = parametri.PageSize;
-            }
+            int pageSize = parametri.PageSize;            
             int currentPage = parametri.PageNumber;
             int totalPages = (int)Math.Ceiling(count / (double)pageSize);             
             var items = users.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
