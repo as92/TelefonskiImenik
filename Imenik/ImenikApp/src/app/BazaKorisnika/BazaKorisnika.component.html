@@ -6,6 +6,16 @@
   <!-- <button (click)="prikaziSve()" type="button" class="btn btn-round btn-info">Prikaži sve korisnike</button> -->
 </div>
 <br>
+<div class="dodaj">
+  <mat-form-field>
+    <mat-label>Broj redaka po stranici</mat-label>
+    <mat-select [(ngModel)]="brojRedaka" (ngModelChange)="promjenibrojRedaka()">
+      <mat-option *ngFor="let broj of red" [value]="broj">
+        {{ broj }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 <div *ngIf="imenici.length>0" class="skrol">
   <div *ngFor="let imenik of pageOfItems" id="kartica">
     {{imenik.ime}}<br>

@@ -131,9 +131,11 @@ export class TelefonImenikComponent implements OnInit {
   }
 
   prikaziSve() {
+    this.servis.brojRedaka = this.brojRedaka;
+
     if (this.pretraga === '') {
       this.servis.trazi = 'default';
-      this.imeniks$ = this.servis.getImeniks(1);
+      this.imeniks$ = this.servis.getImeniksTraziPage(this.servis.trazi, this.currentPage, this.servis.brojRedaka);
       this.imeniks$.subscribe(result => {
         this.imenici = result.body,
           this.header = result.headers.getAll('paging-headers'),
@@ -152,7 +154,9 @@ export class TelefonImenikComponent implements OnInit {
     if (this.pretraga === '') {
       this.servis.trazi = 'default';
     }
-    this.imeniks$ = this.servis.getImeniks(this.currentPage);
+    //this.imeniks$ = this.servis.getImeniks(this.currentPage);
+    this.imeniks$ = this.servis.getImeniksTraziPage(this.servis.trazi, this.currentPage, this.servis.brojRedaka);
+
     this.imeniks$.subscribe(result => {
       this.imenici = result.body,
         this.header = result.headers.getAll('paging-headers'),

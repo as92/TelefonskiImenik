@@ -14,6 +14,8 @@ export class BazaKorisnikaComponent implements OnInit {
   header: Array<any>;
   totalCount: number;
   totalPages: number;
+  red = [5, 10, 15, 20];
+  brojRedaka = 10;
   pageOfItems: Array<any>;
   imeniks$: Observable<HttpResponse<Imenik[]>>;
   pretraga = '';
@@ -35,22 +37,42 @@ export class BazaKorisnikaComponent implements OnInit {
   }
 
   prikaziSve() {
+    this.servis.brojRedaka = this.brojRedaka;
     if (this.pretraga === '') {
       this.servis.trazi = 'default';
-      this.imeniks$ = this.servis.getImeniks(1);
-      this.imeniks$.subscribe(result => {
-        this.imenici = result.body,
-          this.header = result.headers.getAll('paging-headers'),
-          this.obj = JSON.parse(this.header[0]),
-          this.totalCount = this.obj['totalCount'],
-          this.totalPages = this.obj['totalPages']
-      });
     }
+    //this.imeniks$ = this.servis.getImeniks(this.currentPage);
+    this.imeniks$ = this.servis.getImeniksTraziPage(this.servis.trazi, this.currentPage, this.servis.brojRedaka);
+
+    this.imeniks$.subscribe(result => {
+      this.imenici = result.body,
+        this.header = result.headers.getAll('paging-headers'),
+        this.obj = JSON.parse(this.header[0]),
+        this.totalCount = this.obj['totalCount'],
+        this.totalPages = this.obj['totalPages'];
+    });
   }
 
   onChangePage(pageOfItems: []) {
     // update current page of items
     this.pageOfItems = pageOfItems;
+  }
+  promjenibrojRedaka() {
+    this.servis.brojRedaka = this.brojRedaka;
+    if (this.pretraga === '') {
+      this.servis.trazi = 'default';
+    }
+    //this.imeniks$ = this.servis.getImeniks(this.currentPage);
+    this.imeniks$ = this.servis.getImeniksTraziPage(this.servis.trazi, this.currentPage, this.servis.brojRedaka);
+
+    this.imeniks$.subscribe(result => {
+      this.imenici = result.body,
+        this.header = result.headers.getAll('paging-headers'),
+        this.obj = JSON.parse(this.header[0]),
+        this.totalCount = this.obj['totalCount'],
+        this.totalPages = this.obj['totalPages'];
+    });
+
   }
 
   trazi() {
